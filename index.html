@@ -1,8 +1,21 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-3G7G8SYZ0D"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-3G7G8SYZ0D');
+</script>
+
+
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<link rel="icon" type="image/png" href="assets/images/favicon.ico">
 <title>Kaiserslautern → Amsterdam · Bike Tour</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -323,6 +336,14 @@
     font-style:italic;
     margin-bottom:8px;
   }
+  .trip-date{
+    font-family:'Space Mono', monospace;
+    font-size:11px;
+    color:rgba(27,42,61,0.35);
+    text-transform:uppercase;
+    letter-spacing:0.04em;
+    margin-bottom:6px;
+  }
 
   .route-title{
     font-family:'Fraunces', serif;
@@ -404,11 +425,13 @@
 <body>
 
   <header class="masthead">
-    <div class="eyebrow">11-DAY BIKE TOUR</div>
+    <div class="eyebrow">MY FIRST LONG LONG BIKE TOUR</div>
     <h1>Kaiserslautern <span class="arrow">→</span> Amsterdam</h1>
-    <p class="sub">My first epic bike tour! <br> I will be staying at hosts along the way or at the cheapest hostels</p>
+    <p class="sub">My first epic bike tour! <br> I will be staying with hosts along the way or at the cheapest hostels</p>
     <div class="stat-block">
       <div class="stat-group">
+        <div class="stat-label">Start Date: </div>
+        <span class="stat-chip startDate"><b>--</b></span>
         <div class="stat-label">Countdown</div>
         <div class="stat-row live-stat-row">
           <span class="stat-chip"><b id="tripCountdownStat">--</b></span>
@@ -417,10 +440,10 @@
       <div class="stat-group">
         <div class="stat-label">Planned</div>
         <div class="stat-row">
-          <span class="stat-chip"><b>437.7</b> km total</span>
-          <span class="stat-chip"><b>11</b> days</span>
-          <span class="stat-chip"><b>8</b> riding days</span>
-          <span class="stat-chip"><b>3</b> rest days</span>
+          <span class="stat-chip total"><b>--</b> km total</span>
+          <span class="stat-chip duration"><b>--</b> days</span>
+          <span class="stat-chip riding"><b>--</b> riding days</span>
+          <span class="stat-chip rest"><b>--</b> rest days</span>
           <span class="stat-chip"><b>2</b> countries</span>
         </div>
       </div>
@@ -429,7 +452,6 @@
         <div class="stat-row live-stat-row">
           <span class="stat-chip"><b id="liveDayStat">--</b> day</span>
           <span class="stat-chip"><b id="liveKmStat">--</b> km done</span>
-          <span class="stat-chip"><b id="liveStopStat">Not live yet</b></span>
           <span class="stat-chip"><b id="liveRemainingStat">--</b> days left</span>
         </div>
       </div>
@@ -457,11 +479,12 @@
       <div class="stop" id="day-1">
         <div class="marker">01</div>
         <div class="card">
+          <div class="trip-date day-1">17/06/2026</div>
           <div class="train-line">🚂 Kaiserslautern → Bingen am Rhein (train cuz I hate hills)</div>
-          <div class="badge-row"><span class="badge">64.2 KM</span></div>
+          <div class="badge-row"><span class="badge day-1">-- KM</span></div>
           <div class="route-title">Bingen am Rhein <span class="city-dim">→</span> Koblenz</div>
           <p class="blurb">To update</p>
-          <img class="card-photo" src="assets/images/day1_map.png" alt="map-here" style="object-fit:cover;">
+          <img class="card-photo" src="" alt="map-here" style="object-fit:cover;">
         </div>
       </div>
 
@@ -469,10 +492,11 @@
       <div class="stop" id="day-2">
         <div class="marker">02</div>
         <div class="card">
-          <div class="badge-row"><span class="badge">65.6 KM</span></div>
+          <div class="trip-date day-2">18/06/2026</div>
+          <div class="badge-row"><span class="badge day-2">-- KM</span></div> 
           <div class="route-title">Koblenz <span class="city-dim">→</span> Bonn</div>
           <p class="blurb">To update</p>
-          <img class="card-photo" src="assets/images/day2_map.png" alt="map-here" style="object-fit:cover;">
+          <img class="card-photo" src="" alt="map-here" style="object-fit:cover;">
         </div>
       </div>
 
@@ -480,21 +504,23 @@
       <div class="stop" id="day-3">
         <div class="marker">03</div>
         <div class="card">
-          <div class="badge-row"><span class="badge">30.9 KM</span></div>
-          <div class="route-title">Bonn <span class="city-dim">→</span> Cologne</div>
+          <div class="trip-date day-3">17/06/2026</div>
+          <div class="badge-row"><span class="badge day-3">-- KM</span></div>
+          <div class="route-title">Bonn <span class="city-dim">→</span> Köln</div>
           <p class="blurb">To update</p>
-          <img class="card-photo" src="assets/images/day3_map.png" alt="map-here" style="object-fit:cover;">
+          <img class="card-photo" src="" alt="map-here" style="object-fit:cover;">
         </div>
       </div>
 
-      <!-- DAY 4: REST - COLOGNE -->
+      <!-- DAY 4: REST - Köln -->
       <div class="stop rest" id="day-4">
         <div class="marker">04</div>
         <div class="card">
+          <div class="trip-date day-4">17/06/2026</div>
           <div class="badge-row"><span class="badge rest">REST DAY</span></div>
-          <div class="route-title">Explore Cologne</div>
+          <div class="route-title">Explore Köln</div>
           <p class="blurb">To update</p>
-          <img class="card-photo" src="assets/images/cologne.png" alt="Cologne" style="object-fit:cover;">
+          <img class="card-photo" src="" alt="Köln" style="object-fit:cover;">
         </div>
       </div>
 
@@ -502,10 +528,11 @@
       <div class="stop" id="day-5">
         <div class="marker">05</div>
         <div class="card">
-          <div class="badge-row"><span class="badge">41.2 KM</span></div>
-          <div class="route-title">Cologne <span class="city-dim">→</span> Düsseldorf</div>
+          <div class="trip-date day-5">17/06/2026</div>
+          <div class="badge-row"><span class="badge day-5">-- KM</span></div>
+          <div class="route-title">Köln <span class="city-dim">→</span> Düsseldorf</div>
           <p class="blurb">To update</p>
-          <img class="card-photo" src="assets/images/day5_map.png" alt="map-here" style="object-fit:cover;">
+          <img class="card-photo" src="" alt="map-here" style="object-fit:cover;">
         </div>
       </div>
 
@@ -513,10 +540,11 @@
       <div class="stop" id="day-6">
         <div class="marker">06</div>
         <div class="card">
-          <div class="badge-row"><span class="badge">58.7 KM</span></div>
+          <div class="trip-date day-6">17/06/2026</div>
+          <div class="badge-row"><span class="badge day-6">-- KM</span></div>
           <div class="route-title">Düsseldorf 🇩🇪<span class="city-dim">→</span> Venlo 🇳🇱 <br>(BORDER CROSSING YAY!)</div>
           <p class="blurb">To update</p>
-          <img class="card-photo" src="assets/images/day6_map.png" alt="map-here" style="object-fit:cover;">
+          <img class="card-photo" src="" alt="map-here" style="object-fit:cover;">
         </div>
       </div>
 
@@ -524,10 +552,11 @@
       <div class="stop rest" id="day-7">
         <div class="marker">07</div>
         <div class="card">
+          <div class="trip-date day-7">17/06/2026</div>
           <div class="badge-row"><span class="badge rest">REST DAY</span></div>
           <div class="route-title">Explore Venlo</div>
           <p class="blurb">To update</p>
-          <img class="card-photo" src="assets/images/venlo.png" alt="Venlo" style="object-fit:cover;">
+          <img class="card-photo" src="" alt="Venlo" style="object-fit:cover;">
         </div>
       </div>
 
@@ -535,10 +564,11 @@
       <div class="stop" id="day-8">
         <div class="marker">08</div>
         <div class="card">
-          <div class="badge-row"><span class="badge">64.4 KM</span></div>
+          <div class="trip-date day-8">18/06/2026</div>
+          <div class="badge-row"><span class="badge day-8">-- KM</span></div>
           <div class="route-title">Venlo <span class="city-dim">→</span> Nijmegen</div>
           <p class="blurb">To update</p>
-          <img class="card-photo" src="assets/images/day8_map.png" alt="map-here" style="object-fit:cover;">
+          <img class="card-photo" src="" alt="map-here" style="object-fit:cover;">
         </div>
       </div>
 
@@ -546,10 +576,11 @@
       <div class="stop" id="day-9">
         <div class="marker">09</div>
         <div class="card">
-          <div class="badge-row"><span class="badge">61.9 KM</span></div>
+          <div class="trip-date day-9">17/06/2026</div>
+          <div class="badge-row"><span class="badge day-9">-- KM</span></div>
           <div class="route-title">Nijmegen <span class="city-dim">→</span> Amersfoort</div>
           <p class="blurb">To update</p>
-          <img class="card-photo" src="assets/images/day9_map.png" alt="map-here" style="object-fit:cover;">
+          <img class="card-photo" src="" alt="map-here" style="object-fit:cover;">
         </div>
       </div>
 
@@ -557,10 +588,11 @@
       <div class="stop rest" id="day-10">
         <div class="marker">10</div>
         <div class="card">
+          <div class="trip-date day-10">17/06/2026</div>
           <div class="badge-row"><span class="badge rest">REST DAY</span></div>
           <div class="route-title">Explore Amersfoort</div>
           <p class="blurb">To update</p>
-          <img class="card-photo" src="assets/images/amersfoort.png" alt="Amersfoort" style="object-fit:cover;">
+          <img class="card-photo" src="" alt="Amersfoort" style="object-fit:cover;">
         </div>
       </div>
 
@@ -568,10 +600,11 @@
       <div class="stop" id="day-11">
         <div class="marker">11</div>
         <div class="card">
-          <div class="badge-row"><span class="badge">50.8 KM</span></div>
+          <div class="trip-date day-11">17/06/2026</div>
+          <div class="badge-row"><span class="badge day-11">-- KM</span></div>
           <div class="route-title">Amersfoort <span class="city-dim">→</span> Amsterdam</div>
           <p class="blurb">To update</p>
-          <img class="card-photo" src="assets/images/day11_map.png" alt="map-here" style="object-fit:cover;">
+          <img class="card-photo" src="" alt="map-here" style="object-fit:cover;">
         </div>
       </div>
 
@@ -579,8 +612,8 @@
   </section>
 
   <footer>
-    <div class="recap">437.7 KM · 11 DAYS · 8 RIDING · 3 RESTING · 2 COUNTRIES</div>
     <div class="signoff">Kaiserslautern <span class="arrow">→</span> Amsterdam</div>
+    <div >An AI was abused in the making of the design of this page.</div>
   </footer>
 <script>
   document.addEventListener("DOMContentLoaded", () => {
@@ -588,26 +621,16 @@
       history.scrollRestoration = 'manual';
     }
 
-    const dayDistances = [64.2, 65.6, 30.9, 0, 41.2, 58.7, 0, 64.4, 61.9, 0, 50.8];
-    const dayStops = [
-      'Koblenz',
-      'Bonn',
-      'Cologne',
-      'Cologne',
-      'Düsseldorf',
-      'Venlo',
-      'Venlo',
-      'Nijmegen',
-      'Amersfoort',
-      'Amersfoort',
-      'Amsterdam'
-    ];
+    function getDaysUntilTrip(startDate) {
+      const [year, month, day] = startDate.split('-').map(Number);
+      const tripStart = new Date(year, month - 1, day);
+      const today = new Date();
+      today.setHours(0, 0, 0, 0);
 
-    function getValidDay(day) {
-      const liveDay = Number.parseInt(day, 10);
-      if (!Number.isInteger(liveDay) || liveDay < 0 || liveDay > 11) {
-        throw new Error('assets/data/trip.json needs a day from 0 to 11');
-      }
+      return Math.ceil((tripStart - today) / 86400000);
+    }
+    function getValidDay(daysUntil) {
+      const liveDay = Math.max(0, 0 - daysUntil + 1);
       return liveDay;
     }
 
@@ -623,21 +646,25 @@
       if (!response.ok) throw new Error('Could not load assets/data/trip.json');
 
       const data = await response.json();
+      const daysUntil = getDaysUntilTrip(getValidStartDate(data.startDate));
+      const tripDuration = Array.isArray(data.distances) ? data.distances.filter(d => d >= 0).length : 0;
+      const restDays = Array.isArray(data.distances) ? data.distances.filter(d => d === 0).length : 0;
+      const ridingDays = tripDuration - restDays;
       return {
-        day: getValidDay(data.day),
+        day: getValidDay(daysUntil),
+        totalDistance: Array.isArray(data.distances) ? data.distances.reduce((sum, d) => sum + d, 0) : 0,
+        daysUntil: daysUntil,
+        ridingDays: ridingDays,
+        restDays: restDays,
+        tripDuration: tripDuration,
+        distances: Array.isArray(data.distances) ? data.distances : [],
         startDate: getValidStartDate(data.startDate),
         blurbs: Array.isArray(data.blurbs) ? data.blurbs : [],
         maps: Array.isArray(data.maps) ? data.maps : []
       };
     }
 
-    function updateCountdown(startDate) {
-      const [year, month, day] = startDate.split('-').map(Number);
-      const tripStart = new Date(year, month - 1, day);
-      const today = new Date();
-      today.setHours(0, 0, 0, 0);
-
-      const daysUntil = Math.ceil((tripStart - today) / 86400000);
+    function updateCountdown(daysUntil) {
       const countdownStat = document.getElementById('tripCountdownStat');
 
       if (daysUntil > 1) {
@@ -646,27 +673,87 @@
         countdownStat.textContent = '1 day until trip';
       } else if (daysUntil === 0) {
         countdownStat.textContent = 'Trip starts today';
+      } else if (daysUntil <= -11) {
+        countdownStat.textContent = 'Trip is over';
       } else {
         countdownStat.textContent = 'Trip is underway';
       }
     }
+    function updatePlannedStats(totalDistance, ridingDays, restDays, tripDuration, startDate, distances) {
+      const distanceChip = document.querySelector('.stat-chip.total');
+      if (distanceChip) {
+        distanceChip.innerHTML =
+          '<b>' + totalDistance.toFixed(1) + '</b> km total';
+      }
 
-    function updateLiveStats(liveDay) {
+      const ridingDaysChip = document.querySelector('.stat-chip.riding');
+      if (ridingDaysChip) {
+        ridingDaysChip.innerHTML =
+          '<b>' + ridingDays + '</b> riding days';
+      }
+
+      const restDaysChip = document.querySelector('.stat-chip.rest');
+      if (restDaysChip) {
+        restDaysChip.innerHTML =
+          '<b>' + restDays + '</b> rest days';
+      }
+
+      const tripDurationChip = document.querySelector('.stat-chip.duration');
+      if (tripDurationChip) {
+        tripDurationChip.innerHTML =
+          '<b>' + tripDuration + '</b> trip days';
+      }
+
+      const [year, month, day] = startDate.split('-');
+      const formattedStartDate = `${day}/${month}/${year}`;
+      const startDateChip = document.querySelector('.stat-chip.startDate');
+      if (startDateChip) {
+        startDateChip.innerHTML =
+          '<b>' + formattedStartDate + '</b> ';
+      }
+
+      const dates = document.querySelectorAll('.trip-date');
+      dates.forEach(dateElem => {
+        const dayClass = Array.from(dateElem.classList).find(cls => cls.startsWith('day-'));
+        if (dayClass) {
+          const dayNumber = parseInt(dayClass.split('-')[1]);
+          const tripDate = new Date(year, month - 1, day);
+          tripDate.setDate(tripDate.getDate() + dayNumber - 1);
+          const formattedDate = `${String(tripDate.getDate()).padStart(2, '0')}/${String(tripDate.getMonth() + 1).padStart(2, '0')}/${tripDate.getFullYear()}`;
+          dateElem.textContent = formattedDate;
+        }
+      });
+
+      const distanceBadges = document.querySelectorAll('.badge');
+      distanceBadges.forEach(badge => {
+        const dayClass = Array.from(badge.classList).find(cls => cls.startsWith('day-'));
+        if (dayClass) {
+          const dayNumber = parseInt(dayClass.split('-')[1]);
+          const distance = Array.isArray(distances) && distances[dayNumber - 1] >= 0 ? distances[dayNumber - 1] : null;  
+          if (distance !== null) {
+            badge.textContent = `${distance.toFixed(1)} KM`;
+          } else if (badge.classList.contains('rest')) {
+            badge.textContent = 'REST DAY';
+          }
+        }
+      });
+    }
+    function updateLiveStats(liveDay, distances) {
       if (liveDay === 0) {
         document.getElementById('liveDayStat').textContent = '0/11';
         document.getElementById('liveKmStat').textContent = '0.0';
-        document.getElementById('liveStopStat').textContent = 'Home';
         document.getElementById('liveRemainingStat').textContent = '11';
         return;
       }
 
-      const liveKm = dayDistances
+      if (liveDay > 11) liveDay = 11;
+
+      const liveKm = distances
         .slice(0, liveDay)
         .reduce((total, distance) => total + distance, 0);
 
       document.getElementById('liveDayStat').textContent = `${liveDay}/11`;
       document.getElementById('liveKmStat').textContent = liveKm.toFixed(1);
-      document.getElementById('liveStopStat').textContent = dayStops[liveDay - 1];
       document.getElementById('liveRemainingStat').textContent = 11 - liveDay;
     }
 
@@ -712,7 +799,7 @@
 
             const badgeRow = card.querySelector('.badge-row');
             if (badgeRow && !badgeRow.querySelector('.live-pulse-badge')) {
-              badgeRow.insertAdjacentHTML('afterbegin', '<img class="current-stop-photo" src="assets/images/me.png" alt="Current stop photo"><span class="badge live-pulse-badge" style="background:var(--orange); color:var(--ink); border-color:var(--orange);">📍 CURRENT STOP</span>');
+              badgeRow.insertAdjacentHTML('afterbegin', '<img class="current-stop-photo" src="assets/images/me.png" alt="Current stop photo"><span class="badge live-pulse-badge" style="background:var(--orange); color:var(--ink); border-color:var(--orange);">📍 Suffering here rn</span>');
             }
           }
         }
@@ -734,8 +821,9 @@
 
     tripConfigPromise
       .then((config) => {
-        updateCountdown(config.startDate);
-        updateLiveStats(config.day);
+        updateCountdown(config.daysUntil);
+        updateLiveStats(config.day, config.distances);
+        updatePlannedStats(config.totalDistance, config.ridingDays, config.restDays, config.tripDuration, config.startDate, config.distances);
         updateRouteBlurbs(config.blurbs);
         updateRouteMaps(config.maps);
 
@@ -764,7 +852,6 @@
         showLiveDay(requestedDay);
       })
       .catch((error) => {
-        document.getElementById('liveStopStat').textContent = error.message;
         document.getElementById('tripCountdownStat').textContent = 'I haven\'t decided the start date yet. But it\'s gonna be in Sept!';
       });
 
@@ -781,6 +868,9 @@
           const liveDay = config.day;
           if (liveDay === 0) {
             throw new Error('What? I\'m supposed to be on this tour? Probably not yet so I\'m just chilling at home or suffering through the exams');
+          }
+          else if (liveDay > 11) {
+            throw new Error('The trip is over! I\'m probably back home and already planning the next one');
           }
 
           sessionStorage.setItem('scrollToLiveDay', String(liveDay));
