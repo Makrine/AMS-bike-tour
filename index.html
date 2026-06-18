@@ -1,0 +1,798 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Kaiserslautern → Amsterdam · Bike Tour</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700;9..144,900&family=Space+Grotesk:wght@400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+
+  /* ---------- LIVE TRACKING STYLES ---------- */
+  .current-live-day .marker {
+    background: var(--orange) !important;
+    color: var(--ink) !important;
+    box-shadow: 0 0 0 4px rgba(219, 138, 44, 0.4);
+    animation: markerPulse 2s infinite ease-in-out;
+  }
+
+  @keyframes markerPulse {
+    0% { box-shadow: 0 0 0 0px rgba(219, 138, 44, 0.5); }
+    70% { box-shadow: 0 0 0 10px rgba(219, 138, 44, 0); }
+    100% { box-shadow: 0 0 0 0px rgba(219, 138, 44, 0); }
+  }
+
+  .live-pulse-badge {
+    animation: badgeGlow 1.5s infinite alternate ease-in-out;
+  }
+
+  .current-stop-photo {
+    width:64px;
+    height:64px;
+    flex:0 0 64px;
+    object-fit:contain;
+  }
+
+  @keyframes badgeGlow {
+    from { transform: rotate(-3deg) scale(1); }
+    to { transform: rotate(-3deg) scale(1.04); }
+  }
+/* ---------- LIVE TRACKING STYLES ---------- */
+
+  :root{
+    --ink:#1B2A3D;
+    --teal:#2F6E62;
+    --terracotta:#C2553A;
+    --orange:#DB8A2C;
+    --paper:#EFE9D8;
+    --paper-deep:#E2DABF;
+    --card:#F8F3E6;
+    --mist:#D7DCC9;
+  }
+
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;
+    background:var(--paper);
+    color:var(--ink);
+    font-family:'Space Grotesk', sans-serif;
+    line-height:1.5;
+  }
+
+  h1,h2,h3{
+    font-family:'Fraunces', serif;
+    font-weight:700;
+    margin:0;
+  }
+
+  .mono{
+    font-family:'Space Mono', monospace;
+  }
+
+  a{color:inherit;}
+
+  /* ---------- MASTHEAD ---------- */
+  .masthead{
+    background:var(--ink);
+    color:var(--paper);
+    padding:64px 24px 48px;
+    text-align:center;
+  }
+  .eyebrow{
+    font-family:'Space Mono', monospace;
+    font-size:13px;
+    letter-spacing:0.32em;
+    text-transform:uppercase;
+    color:var(--orange);
+    margin-bottom:18px;
+  }
+  .masthead h1{
+    font-size:clamp(34px, 6vw, 64px);
+    font-weight:900;
+    line-height:1.05;
+    margin-bottom:16px;
+  }
+  .masthead h1 .arrow{
+    color:var(--terracotta);
+    -webkit-text-stroke:0;
+  }
+  .masthead p.sub{
+    max-width:560px;
+    margin:0 auto 32px;
+    font-size:17px;
+    color:#D7DCC9;
+  }
+  .stat-block{
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    gap:10px;
+  }
+  .stat-group{
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    gap:8px;
+  }
+  .stat-label{
+    font-family:'Space Mono', monospace;
+    font-size:11px;
+    font-weight:700;
+    letter-spacing:0.2em;
+    text-transform:uppercase;
+    color:rgba(239,233,216,0.62);
+  }
+  .stat-row{
+    display:flex;
+    flex-wrap:wrap;
+    justify-content:center;
+    gap:10px;
+  }
+  .stat-chip{
+    font-family:'Space Mono', monospace;
+    font-size:13px;
+    border:1px solid rgba(239,233,216,0.35);
+    border-radius:999px;
+    padding:7px 16px;
+    color:var(--paper);
+    letter-spacing:0.02em;
+  }
+  .stat-chip b{color:var(--orange);}
+  .live-stat-row .stat-chip{
+    border-color:rgba(219,138,44,0.7);
+    background:rgba(219,138,44,0.1);
+  }
+
+  .where-btn{
+    margin-top:22px;
+    border:2px solid var(--orange);
+    background:var(--orange);
+    color:var(--ink);
+    display:inline-flex;
+    align-items:center;
+    gap:8px;
+    font-family:'Space Mono', monospace;
+    font-size:13px;
+    font-weight:700;
+    letter-spacing:0.04em;
+    text-transform:uppercase;
+    padding:10px 18px;
+    border-radius:3px;
+    cursor:pointer;
+    box-shadow:3px 3px 0 rgba(0,0,0,0.18);
+    transition:transform 0.15s ease, box-shadow 0.15s ease;
+  }
+  .where-btn:hover{
+    transform:translateY(-1px);
+    box-shadow:4px 4px 0 rgba(0,0,0,0.22);
+  }
+  .where-btn:disabled{
+    cursor:wait;
+    opacity:0.75;
+  }
+  .where-btn img{
+    width:28px;
+    height:28px;
+    object-fit:contain;
+  }
+
+  /* ---------- PHOTO PLACEHOLDERS ---------- */
+  .photo-placeholder{
+    position:relative;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    gap:10px;
+    background-color:var(--mist);
+    background-image:
+      repeating-linear-gradient(135deg, rgba(27,42,61,0.06) 0px, rgba(27,42,61,0.06) 2px, transparent 2px, transparent 14px);
+    border:2px dashed rgba(27,42,61,0.35);
+    color:rgba(27,42,61,0.6);
+    text-align:center;
+  }
+  .photo-placeholder svg{width:30px;height:30px;opacity:0.55;}
+  .photo-placeholder .ph-label{
+    font-family:'Space Mono', monospace;
+    font-size:12px;
+    letter-spacing:0.04em;
+    max-width:220px;
+  }
+
+  .hero-photo-wrap{
+    position:relative;
+  }
+  .hero-photo{
+    width:100%;
+    height:clamp(220px, 38vw, 380px);
+    object-position:center 40%;
+    border-radius:0;
+    border-width:0 0 3px 0;
+    border-top:3px solid var(--ink);
+  }
+  .hero-tag{
+    position:absolute;
+    left:24px;
+    bottom:24px;
+    background:var(--terracotta);
+    color:var(--card);
+    font-family:'Space Mono', monospace;
+    font-size:12px;
+    letter-spacing:0.05em;
+    padding:8px 14px;
+    border-radius:3px;
+    box-shadow:3px 3px 0 rgba(27,42,61,0.25);
+  }
+
+  .card-photo{
+    width:100%;
+    aspect-ratio:4/3;
+    border-radius:6px;
+    margin-top:14px;
+  }
+  .card-photo svg{width:24px;height:24px;}
+  .card-photo .ph-label{font-size:11px;}
+
+  /* ---------- ROUTE / TIMELINE ---------- */
+  .route-section{
+    max-width:880px;
+    margin:0 auto;
+    padding:64px 20px 20px;
+  }
+  .section-head{
+    text-align:center;
+    margin-bottom:48px;
+  }
+  .section-head .eyebrow{color:var(--terracotta);}
+  .section-head h2{
+    font-size:clamp(26px, 4vw, 36px);
+    color:var(--ink);
+  }
+
+  .route{
+    position:relative;
+    display:flex;
+    flex-direction:column;
+    gap:36px;
+  }
+  .route::before{
+    content:'';
+    position:absolute;
+    left:50%;
+    top:8px;
+    bottom:8px;
+    width:0;
+    border-left:3px dashed var(--ink);
+    opacity:0.35;
+    transform:translateX(-50%);
+  }
+
+  .stop{
+    position:relative;
+    display:grid;
+    grid-template-columns:1fr 64px 1fr;
+    align-items:start;
+    scroll-margin-top:24px;
+  }
+  .stop .marker{
+    grid-column:2;
+    justify-self:center;
+    width:46px;
+    height:46px;
+    border-radius:50%;
+    background:var(--ink);
+    color:var(--paper);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-family:'Space Mono', monospace;
+    font-size:13px;
+    font-weight:700;
+    z-index:2;
+    border:3px solid var(--paper);
+    box-shadow:0 0 0 2px rgba(27,42,61,0.2);
+  }
+  .stop.rest .marker{background:var(--teal);}
+
+  .card{
+    background:var(--card);
+    border:1.5px solid rgba(27,42,61,0.18);
+    border-radius:4px;
+    padding:22px 24px;
+    box-shadow:4px 4px 0 rgba(27,42,61,0.06);
+    transition:transform 0.15s ease, box-shadow 0.15s ease;
+  }
+  @media (prefers-reduced-motion: no-preference){
+    .card:hover{
+      transform:translateY(-2px);
+      box-shadow:6px 6px 0 rgba(27,42,61,0.1);
+    }
+  }
+
+  .stop:nth-child(odd) .card{grid-column:1; justify-self:end; text-align:right;}
+  .stop:nth-child(odd) .badge-row{justify-content:flex-end;}
+  .stop:nth-child(even) .card{grid-column:3; justify-self:start; text-align:left;}
+  .stop:nth-child(even) .badge-row{justify-content:flex-start;}
+
+  .train-line{
+    font-family:'Space Mono', monospace;
+    font-size:12.5px;
+    color:rgba(27,42,61,0.55);
+    font-style:italic;
+    margin-bottom:8px;
+  }
+
+  .route-title{
+    font-family:'Fraunces', serif;
+    font-weight:600;
+    font-size:21px;
+    margin-bottom:10px;
+    line-height:1.25;
+  }
+  .route-title .city-dim{color:rgba(27,42,61,0.5);font-weight:500;}
+
+  .badge-row{
+    display:flex;
+    align-items:center;
+    flex-wrap:wrap;
+    gap:10px;
+    margin-bottom:12px;
+  }
+  .badge{
+    font-family:'Space Mono', monospace;
+    font-size:12px;
+    font-weight:700;
+    letter-spacing:0.04em;
+    border:2px solid var(--terracotta);
+    color:var(--terracotta);
+    border-radius:999px;
+    padding:5px 14px;
+    display:inline-block;
+    transform:rotate(-3deg);
+    white-space:nowrap;
+  }
+  .badge.rest{
+    border-color:var(--teal);
+    color:var(--teal);
+    transform:rotate(3deg);
+  }
+
+  .blurb{
+    font-size:14.5px;
+    color:rgba(27,42,61,0.78);
+    margin:0;
+  }
+
+  /* mobile: collapse to single column, line + markers on the left */
+  @media (max-width:680px){
+    .route::before{left:23px;}
+    .stop{grid-template-columns:46px 1fr;}
+    .stop .marker{grid-column:1; justify-self:start;}
+    .stop:nth-child(odd) .card,
+    .stop:nth-child(even) .card{
+      grid-column:2;
+      justify-self:start;
+      text-align:left;
+    }
+    .stop:nth-child(odd) .badge-row,
+    .stop:nth-child(even) .badge-row{justify-content:flex-start;}
+  }
+
+  /* ---------- FOOTER ---------- */
+  footer{
+    max-width:880px;
+    margin:64px auto 0;
+    padding:32px 20px 64px;
+    text-align:center;
+  }
+  footer .recap{
+    font-family:'Space Mono', monospace;
+    font-size:13px;
+    color:rgba(27,42,61,0.6);
+    margin-bottom:10px;
+  }
+  footer .signoff{
+    font-family:'Fraunces', serif;
+    font-size:22px;
+    font-weight:600;
+  }
+  footer .signoff .arrow{color:var(--terracotta);}
+</style>
+</head>
+<body>
+
+  <header class="masthead">
+    <div class="eyebrow">11-DAY BIKE TOUR</div>
+    <h1>Kaiserslautern <span class="arrow">→</span> Amsterdam</h1>
+    <p class="sub">My first epic bike tour! <br> I will be staying at hosts along the way or at the cheapest hostels</p>
+    <div class="stat-block">
+      <div class="stat-group">
+        <div class="stat-label">Countdown</div>
+        <div class="stat-row live-stat-row">
+          <span class="stat-chip"><b id="tripCountdownStat">--</b></span>
+        </div>
+      </div>
+      <div class="stat-group">
+        <div class="stat-label">Planned</div>
+        <div class="stat-row">
+          <span class="stat-chip"><b>437.7</b> km total</span>
+          <span class="stat-chip"><b>11</b> days</span>
+          <span class="stat-chip"><b>8</b> riding days</span>
+          <span class="stat-chip"><b>3</b> rest days</span>
+          <span class="stat-chip"><b>2</b> countries</span>
+        </div>
+      </div>
+      <div class="stat-group">
+        <div class="stat-label">Live tracking</div>
+        <div class="stat-row live-stat-row">
+          <span class="stat-chip"><b id="liveDayStat">--</b> day</span>
+          <span class="stat-chip"><b id="liveKmStat">--</b> km done</span>
+          <span class="stat-chip"><b id="liveStopStat">Not live yet</b></span>
+          <span class="stat-chip"><b id="liveRemainingStat">--</b> days left</span>
+        </div>
+      </div>
+    </div>
+    <button class="where-btn" type="button" id="whereAmI">
+      <img src="assets/images/me.png" alt="">
+      <span>Where am I?</span>
+    </button>
+  </header>
+
+  <div class="hero-photo-wrap">
+      <img class="hero-photo" src="assets/images/ams.png" alt="Amsterdam canals" style="object-fit:cover;">
+    <div class="hero-tag">📍 AMSTERDAM — DAY 11</div>
+  </div>
+
+  <section class="route-section">
+    <div class="section-head">
+      <div class="eyebrow mono">THE ROUTE</div>
+      <h2>Day by day</h2>
+    </div>
+
+    <div class="route">
+
+      <!-- DAY 1 -->
+      <div class="stop" id="day-1">
+        <div class="marker">01</div>
+        <div class="card">
+          <div class="train-line">🚂 Kaiserslautern → Bingen am Rhein (train cuz I hate hills)</div>
+          <div class="badge-row"><span class="badge">64.2 KM</span></div>
+          <div class="route-title">Bingen am Rhein <span class="city-dim">→</span> Koblenz</div>
+          <p class="blurb">To update</p>
+          <img class="card-photo" src="assets/images/day1_map.png" alt="map-here" style="object-fit:cover;">
+        </div>
+      </div>
+
+      <!-- DAY 2 -->
+      <div class="stop" id="day-2">
+        <div class="marker">02</div>
+        <div class="card">
+          <div class="badge-row"><span class="badge">65.6 KM</span></div>
+          <div class="route-title">Koblenz <span class="city-dim">→</span> Bonn</div>
+          <p class="blurb">To update</p>
+          <img class="card-photo" src="assets/images/day2_map.png" alt="map-here" style="object-fit:cover;">
+        </div>
+      </div>
+
+      <!-- DAY 3 -->
+      <div class="stop" id="day-3">
+        <div class="marker">03</div>
+        <div class="card">
+          <div class="badge-row"><span class="badge">30.9 KM</span></div>
+          <div class="route-title">Bonn <span class="city-dim">→</span> Cologne</div>
+          <p class="blurb">To update</p>
+          <img class="card-photo" src="assets/images/day3_map.png" alt="map-here" style="object-fit:cover;">
+        </div>
+      </div>
+
+      <!-- DAY 4: REST - COLOGNE -->
+      <div class="stop rest" id="day-4">
+        <div class="marker">04</div>
+        <div class="card">
+          <div class="badge-row"><span class="badge rest">REST DAY</span></div>
+          <div class="route-title">Explore Cologne</div>
+          <p class="blurb">To update</p>
+          <img class="card-photo" src="assets/images/cologne.png" alt="Cologne" style="object-fit:cover;">
+        </div>
+      </div>
+
+      <!-- DAY 5 -->
+      <div class="stop" id="day-5">
+        <div class="marker">05</div>
+        <div class="card">
+          <div class="badge-row"><span class="badge">41.2 KM</span></div>
+          <div class="route-title">Cologne <span class="city-dim">→</span> Düsseldorf</div>
+          <p class="blurb">To update</p>
+          <img class="card-photo" src="assets/images/day5_map.png" alt="map-here" style="object-fit:cover;">
+        </div>
+      </div>
+
+      <!-- DAY 6 -->
+      <div class="stop" id="day-6">
+        <div class="marker">06</div>
+        <div class="card">
+          <div class="badge-row"><span class="badge">58.7 KM</span></div>
+          <div class="route-title">Düsseldorf <span class="city-dim">→</span> Venlo</div>
+          <p class="blurb">To update</p>
+          <img class="card-photo" src="assets/images/day6_map.png" alt="map-here" style="object-fit:cover;">
+        </div>
+      </div>
+
+      <!-- DAY 7: REST - VENLO -->
+      <div class="stop rest" id="day-7">
+        <div class="marker">07</div>
+        <div class="card">
+          <div class="badge-row"><span class="badge rest">REST DAY</span></div>
+          <div class="route-title">Explore Venlo</div>
+          <p class="blurb">To update</p>
+          <img class="card-photo" src="assets/images/venlo.png" alt="Venlo" style="object-fit:cover;">
+        </div>
+      </div>
+
+      <!-- DAY 8 -->
+      <div class="stop" id="day-8">
+        <div class="marker">08</div>
+        <div class="card">
+          <div class="badge-row"><span class="badge">64.4 KM</span></div>
+          <div class="route-title">Venlo <span class="city-dim">→</span> Nijmegen</div>
+          <p class="blurb">To update</p>
+          <img class="card-photo" src="assets/images/day8_map.png" alt="map-here" style="object-fit:cover;">
+        </div>
+      </div>
+
+      <!-- DAY 9 -->
+      <div class="stop" id="day-9">
+        <div class="marker">09</div>
+        <div class="card">
+          <div class="badge-row"><span class="badge">61.9 KM</span></div>
+          <div class="route-title">Nijmegen <span class="city-dim">→</span> Amersfoort</div>
+          <p class="blurb">To update</p>
+          <img class="card-photo" src="assets/images/day9_map.png" alt="map-here" style="object-fit:cover;">
+        </div>
+      </div>
+
+      <!-- DAY 10: REST - AMERSFOORT -->
+      <div class="stop rest" id="day-10">
+        <div class="marker">10</div>
+        <div class="card">
+          <div class="badge-row"><span class="badge rest">REST DAY</span></div>
+          <div class="route-title">Explore Amersfoort</div>
+          <p class="blurb">To update</p>
+          <img class="card-photo" src="assets/images/amersfoort.png" alt="Amersfoort" style="object-fit:cover;">
+        </div>
+      </div>
+
+      <!-- DAY 11 -->
+      <div class="stop" id="day-11">
+        <div class="marker">11</div>
+        <div class="card">
+          <div class="badge-row"><span class="badge">50.8 KM</span></div>
+          <div class="route-title">Amersfoort <span class="city-dim">→</span> Amsterdam</div>
+          <p class="blurb">To update</p>
+          <img class="card-photo" src="assets/images/day11_map.png" alt="map-here" style="object-fit:cover;">
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <footer>
+    <div class="recap">437.7 KM · 11 DAYS · 8 RIDING · 3 RESTING · 2 COUNTRIES</div>
+    <div class="signoff">Kaiserslautern <span class="arrow">→</span> Amsterdam</div>
+  </footer>
+<script>
+  document.addEventListener("DOMContentLoaded", () => {
+    if ('scrollRestoration' in history) {
+      history.scrollRestoration = 'manual';
+    }
+
+    const dayDistances = [64.2, 65.6, 30.9, 0, 41.2, 58.7, 0, 64.4, 61.9, 0, 50.8];
+    const dayStops = [
+      'Koblenz',
+      'Bonn',
+      'Cologne',
+      'Cologne',
+      'Düsseldorf',
+      'Venlo',
+      'Venlo',
+      'Nijmegen',
+      'Amersfoort',
+      'Amersfoort',
+      'Amsterdam'
+    ];
+
+    function getValidDay(day) {
+      const liveDay = Number.parseInt(day, 10);
+      if (!Number.isInteger(liveDay) || liveDay < 0 || liveDay > 11) {
+        throw new Error('assets/data/trip.json needs a day from 0 to 11');
+      }
+      return liveDay;
+    }
+
+    function getValidStartDate(startDate) {
+      if (typeof startDate !== 'string' || !/^\d{4}-\d{2}-\d{2}$/.test(startDate)) {
+        throw new Error('Home');
+      }
+      return startDate;
+    }
+
+    async function loadTripConfig() {
+      const response = await fetch('assets/data/trip.json', { cache: 'no-store' });
+      if (!response.ok) throw new Error('Could not load assets/data/trip.json');
+
+      const data = await response.json();
+      return {
+        day: getValidDay(data.day),
+        startDate: getValidStartDate(data.startDate),
+        blurbs: Array.isArray(data.blurbs) ? data.blurbs : [],
+        maps: Array.isArray(data.maps) ? data.maps : []
+      };
+    }
+
+    function updateCountdown(startDate) {
+      const [year, month, day] = startDate.split('-').map(Number);
+      const tripStart = new Date(year, month - 1, day);
+      const today = new Date();
+      today.setHours(0, 0, 0, 0);
+
+      const daysUntil = Math.ceil((tripStart - today) / 86400000);
+      const countdownStat = document.getElementById('tripCountdownStat');
+
+      if (daysUntil > 1) {
+        countdownStat.textContent = `${daysUntil} days until trip`;
+      } else if (daysUntil === 1) {
+        countdownStat.textContent = '1 day until trip';
+      } else if (daysUntil === 0) {
+        countdownStat.textContent = 'Trip starts today';
+      } else {
+        countdownStat.textContent = 'Trip is underway';
+      }
+    }
+
+    function updateLiveStats(liveDay) {
+      if (liveDay === 0) {
+        document.getElementById('liveDayStat').textContent = '0/11';
+        document.getElementById('liveKmStat').textContent = '0.0';
+        document.getElementById('liveStopStat').textContent = 'Home';
+        document.getElementById('liveRemainingStat').textContent = '11';
+        return;
+      }
+
+      const liveKm = dayDistances
+        .slice(0, liveDay)
+        .reduce((total, distance) => total + distance, 0);
+
+      document.getElementById('liveDayStat').textContent = `${liveDay}/11`;
+      document.getElementById('liveKmStat').textContent = liveKm.toFixed(1);
+      document.getElementById('liveStopStat').textContent = dayStops[liveDay - 1];
+      document.getElementById('liveRemainingStat').textContent = 11 - liveDay;
+    }
+
+    function updateRouteBlurbs(blurbs) {
+      document.querySelectorAll('.stop .blurb').forEach((blurb, index) => {
+        const text = blurbs[index];
+        if (typeof text === 'string' && text.trim()) {
+          blurb.textContent = text;
+        }
+      });
+    }
+
+    function updateRouteMaps(maps) {
+      document.querySelectorAll('.stop .card-photo').forEach((photo, index) => {
+        const map = maps[index];
+        if (typeof map === 'string' && map.trim()) {
+          photo.src = map;
+          photo.alt = `Day ${index + 1} map`;
+        }
+      });
+    }
+
+    function showLiveDay(currentDay) {
+      const eyebrow = document.querySelector('.masthead .eyebrow');
+      if (eyebrow) {
+        eyebrow.innerHTML = `• LIVE NOW: DAY ${currentDay} OF 11`;
+        eyebrow.style.color = 'var(--orange)';
+      }
+
+      const stops = document.querySelectorAll('.stop');
+      stops.forEach((stop, index) => {
+        const dayNumber = index + 1;
+
+        if (dayNumber < currentDay) {
+          stop.style.opacity = '0.5';
+        } else if (dayNumber === currentDay) {
+          stop.classList.add('current-live-day');
+
+          const card = stop.querySelector('.card');
+          if (card) {
+            card.style.borderColor = 'var(--orange)';
+            card.style.boxShadow = '0 0 15px rgba(219, 138, 44, 0.4)';
+
+            const badgeRow = card.querySelector('.badge-row');
+            if (badgeRow && !badgeRow.querySelector('.live-pulse-badge')) {
+              badgeRow.insertAdjacentHTML('afterbegin', '<img class="current-stop-photo" src="assets/images/me.png" alt="Current stop photo"><span class="badge live-pulse-badge" style="background:var(--orange); color:var(--ink); border-color:var(--orange);">📍 CURRENT STOP</span>');
+            }
+          }
+        }
+      });
+
+      const scrollToLiveDay = sessionStorage.getItem('scrollToLiveDay');
+      if (scrollToLiveDay === String(currentDay)) {
+        sessionStorage.removeItem('scrollToLiveDay');
+        setTimeout(() => {
+          document.getElementById(`day-${currentDay}`)?.scrollIntoView({
+            behavior: 'smooth',
+            block: 'center'
+          });
+        }, 150);
+      }
+    }
+
+    const tripConfigPromise = loadTripConfig();
+
+    tripConfigPromise
+      .then((config) => {
+        updateCountdown(config.startDate);
+        updateLiveStats(config.day);
+        updateRouteBlurbs(config.blurbs);
+        updateRouteMaps(config.maps);
+
+        const urlParams = new URLSearchParams(window.location.search);
+        const requestedDay = parseInt(urlParams.get('day'));
+
+
+        if (!requestedDay || requestedDay < 1 || requestedDay > 11) return;
+
+        if (requestedDay !== config.day) {
+          const url = new URL(window.location.href);
+          if (config.day > 0) {
+            url.searchParams.set('day', config.day);
+          } else {
+            url.searchParams.delete('day');
+          }
+          url.hash = '';
+          history.replaceState(null, '', url);
+          alert(`Nope, live tracking says day ${config.day} right now. ?day=${requestedDay} is not allowed.`);
+          if (config.day > 0) {
+            showLiveDay(config.day);
+          }
+          return;
+        }
+
+        showLiveDay(requestedDay);
+      })
+      .catch((error) => {
+        document.getElementById('liveStopStat').textContent = error.message;
+        document.getElementById('tripCountdownStat').textContent = 'I haven\'t decided the start date yet. But it\'s gonna be in Sept!';
+      });
+
+    const whereButton = document.getElementById('whereAmI');
+    if (whereButton) {
+      whereButton.addEventListener('click', async () => {
+        const buttonText = whereButton.querySelector('span');
+        const originalText = buttonText.textContent;
+        whereButton.disabled = true;
+        buttonText.textContent = 'Finding...';
+
+        try {
+          const config = await tripConfigPromise;
+          const liveDay = config.day;
+          if (liveDay === 0) {
+            throw new Error('What? I\'m supposed to be on this tour? Probably not yet so I\'m just chilling at home or suffering through the exams');
+          }
+
+          sessionStorage.setItem('scrollToLiveDay', String(liveDay));
+          window.location.href = `?day=${liveDay}`;
+        } catch (error) {
+          alert(error.message);
+          whereButton.disabled = false;
+          buttonText.textContent = originalText;
+        }
+      });
+    }
+  });
+</script>
+</body>
+</html>
